@@ -11,6 +11,9 @@ function updateStruct (struct, data) {
   return struct
 
   function update (value, key) {
+    if (struct[key]._type === 'observ-struct') {
+      return updateStruct(struct[key], value)
+    }
     struct[key].set(value)
   }
 }

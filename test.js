@@ -20,3 +20,27 @@ test(function (t) {
   })
   t.end()
 })
+
+test('recursive', function (t) {
+  var state = Struct({
+    shallow: Observ(1),
+    deep: Struct({
+      value: Struct({
+        bottom: Observ('bottom'),
+        barrel: Observ('barrel')
+      })
+    })
+  })
+  update(state, {
+    deep: {
+      value: {
+        bottom: 'BOTTOM'
+      }
+    }
+  })
+  t.deepEqual(state.deep.value(), {
+    bottom: 'BOTTOM',
+    barrel: 'barrel'
+  })
+  t.end()
+})
